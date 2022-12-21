@@ -3,14 +3,18 @@ import express from "express";
 import bodyParser from "body-parser";
 import User from "./User.js";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
+const PORT = process.env.PORT;
+const DATABASE = process.env.DATABASE;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-mongoose.connect("mongodb://localhost:27017/flipkart", () => {
-  console.log("mongosee connection successful");
+mongoose.connect(DATABASE, () => {
+  console.log("mongosee atlas  connection successful");
 });
 app.get("/", (req, res) => {
-  res.send("working the api");
+  res.send("working the api and env");
 });
 app.get("/users", async (req, res) => {
   const allData = await User.find();
@@ -46,7 +50,7 @@ app.post("/loginuser", async (req, res) => {
     res.json(err);
   }
 });
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.log("server started at 8000");
 });
 
